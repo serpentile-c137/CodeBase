@@ -2,6 +2,7 @@ const { response } = require('express')
 const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
+const jwt = require("jsonwebtoken")
 
 require('../db/conn')
 const User = require('../model/UserScehma')
@@ -49,7 +50,15 @@ router.post('/login', async (req, res) => {
         // console.log(userLogin)
 
         if (userLogin) {
+            let token;
             const isMatch = await bcrypt.compare(password, userLogin.password)
+
+            token = await userLogin.generateAuthToken()
+            console.log(token)
+            res.cookie("jwtoken", token, {
+                expires: new Date(Date.now() + 25892000000),
+                httpOnly: true
+            })
 
             if (!isMatch) {
                 res.status(400).json({ error: "Invalid credential." })
@@ -59,8 +68,6 @@ router.post('/login', async (req, res) => {
         } else {
             res.status(400).json({ error: "Invalid credential." })
         }
-
-
 
     } catch (err) {
         console.log(err)

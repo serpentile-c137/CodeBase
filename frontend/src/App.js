@@ -1,68 +1,29 @@
-import { useState } from "react";
-import "./App.css";
+import React from 'react'
+import Navbar from './components/Navbar'
+import Home from './components/Home'
+import { Routes, Route } from 'react-router-dom'
+import Login from './components/Login'
+import Signup from './components/Signup'
+import Tutorial from './components/Tutorial'
+import Compiler from './components/Compiler'
+import './App.css'
+import Errorpage from './components/Errorpage'
 
-function App() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  async function registerUser(event) {
-    event.preventDefault();
-    console.log("clicked");
-    const response = fetch("http://localhost:3001/api/register", {
-      method: "POST",
-      body: JSON.stringify({
-        name,
-        email,
-        username,
-        password,
-      }),
-    });
-
-    const data = (await response).json;
-    console.log(data);
-  }
-
+const App = () => {
   return (
-    <div className="App">
-      <h3>register</h3>
-      <form action="" onSubmit={registerUser}>
-        <input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          placeholder="Name"
-        />
-        <br />
-        <input
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          type="email"
-          placeholder="Email"
-        />
-        <br />
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          type="text"
-          placeholder="UserName"
-        />
-        <br />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          placeholder="Password"
-        />
-        <br />
-        {/* <input type="text" placeholder="Enter your name" id="" />
-        <input type="text" placeholder="Enter your password" id="" />
-        <input type="text" placeholder="Enter your name" id="" /> */}
-        <input type="submit" />
-      </form>
-    </div>
-  );
+    <>
+      <Navbar />
+      <Routes>
+        <Route element={<Errorpage />} />
+        <Route exact path='/' element={<Home />} />
+        <Route exact path='/login' element={<Login />} />
+        <Route exact path='/signup' element={<Signup />} />
+        <Route exact path='/tutorial' element={<Tutorial />} />
+        <Route exact path='/compiler' element={<Compiler />} />
+        <Route element={<Errorpage />} />
+      </Routes>
+    </>
+  )
 }
 
-export default App;
+export default App
