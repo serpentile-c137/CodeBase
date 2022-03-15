@@ -12,9 +12,9 @@ router.get('/', (req, res) => {
 })
 
 router.post('/register', async (req, res) => {
-    const { name, email, username, contact, gender, password, confirmpass } = req.body
+    const { name, email, username, contact, password, confirmpass } = req.body
 
-    if (!name || !email || !username || !contact || !gender || !password || !confirmpass) {
+    if (!name || !email || !username || !contact || !password || !confirmpass) {
         return res.json({ error: "please fill all the fields" })
     }
 
@@ -26,7 +26,7 @@ router.post('/register', async (req, res) => {
         } else if (password != confirmpass) {
             return res.status(422).json({ error: "password and confirm password not matching" })
         } else {
-            const user = new User({ name, email, username, contact, gender, password, confirmpass })
+            const user = new User({ name, email, username, contact, password, confirmpass })
 
             await user.save()
             res.status(201).json({ message: "user created successfully" })
@@ -36,6 +36,8 @@ router.post('/register', async (req, res) => {
     } catch (err) {
         console.log(err)
     }
+
+
 })
 
 router.post('/login', async (req, res) => {
