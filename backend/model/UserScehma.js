@@ -37,6 +37,10 @@ const userSchema = new mongoose.Schema({
             token: {
                 type: String,
                 required: true
+            },
+            logintime: {
+                type: String,
+                required: true
             }
         }
     ]
@@ -60,8 +64,10 @@ userSchema.pre('save', async function (next) {
 // token generation
 userSchema.methods.generateAuthToken = async function () {
     try {
+        let logintime = new Date()
         let token = jwt.sign({ _id: this._id }, process.env.SECRET_KEY)
-        this.tokens = this.tokens.concat({ token: token })
+        this.tokens = this.tokens.concat({ token: token, logintime: logintime })
+        // this.tokens = this.tokens.concat({ logintime: logintime })
         await this.save()
         return token
     } catch (err) {

@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 
-
-const Compiler = () => {
+const About = () => {
     let navigate = useNavigate();
 
     const callAboutPage = async () => {
@@ -32,9 +31,10 @@ const Compiler = () => {
         callAboutPage()
     }, [])
 
+
     return (
-        <div>Compiler</div>
+        <div>About</div>
     )
 }
 
-export default Compiler
+export default About

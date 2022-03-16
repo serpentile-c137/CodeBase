@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken")
 
 require('../db/conn')
 const User = require('../model/UserScehma')
+const authenticate = require('../middleware/authenticate')
 
 router.get('/', (req, res) => {
     res.send('hello from express server :) using router')
@@ -56,6 +57,7 @@ router.post('/login', async (req, res) => {
             const isMatch = await bcrypt.compare(password, userLogin.password)
 
             token = await userLogin.generateAuthToken()
+            // logintime = new Date.now()
             console.log(token)
             res.cookie("jwtoken", token, {
                 expires: new Date(Date.now() + 25892000000),
@@ -74,6 +76,16 @@ router.post('/login', async (req, res) => {
     } catch (err) {
         console.log(err)
     }
+})
+
+router.get('/about', authenticate, (req, res) => {
+    console.log("tutorial page")
+    res.send(req.rootUser)
+})
+
+router.get('/tutorial', authenticate, (req, res) => {
+    console.log("tutorial page")
+    res.send("tutorial page")
 })
 
 module.exports = router
