@@ -17,7 +17,7 @@ const About = () => {
 
             const data = await res.json()
 
-            if (res.status === 200) {
+            if (!res.status === 200) {
                 const error = new Error(res.error)
                 throw error
             }

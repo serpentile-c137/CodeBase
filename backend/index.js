@@ -1,6 +1,7 @@
 // const { request } = require('express');
 const express = require('express')
 const app = express();
+const bodyParser = require("body-parser");
 
 const dotenv = require('dotenv')
 
@@ -8,6 +9,7 @@ dotenv.config({ path: './config.env' })
 require('./db/conn')
 
 app.use(express.json())
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // const User = require('./model/userSchema')
 

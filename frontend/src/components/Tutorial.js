@@ -7,7 +7,7 @@ const Tutorial = () => {
 
     const callAboutPage = async () => {
         try {
-            const res = await fetch('/about', {
+            const res = await fetch('/tutorial', {
                 method: "GET",
                 headers: {
                     Accept: "application/json",

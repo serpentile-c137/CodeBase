@@ -79,13 +79,27 @@ router.post('/login', async (req, res) => {
 })
 
 router.get('/about', authenticate, (req, res) => {
-    console.log("tutorial page")
+    console.log("about page")
+    res.send("about page")
     res.send(req.rootUser)
 })
 
 router.get('/tutorial', authenticate, (req, res) => {
     console.log("tutorial page")
     res.send("tutorial page")
+    res.send(req.rootUser)
+})
+
+router.get('/compiler', authenticate, (req, res) => {
+    console.log("compiler page")
+    res.send("compiler page")
+    res.send(req.rootUser)
+})
+
+router.get('/logout', (req, res) => {
+    console.log("logout page")
+    res.clearCookie("jwtoken", { path: '/' })
+    res.status(200).send("logout")
 })
 
 module.exports = router
