@@ -2,6 +2,9 @@
 const express = require('express')
 const app = express();
 const bodyParser = require("body-parser");
+var cookies = require("cookie-parser");
+
+app.use(cookies());
 
 const dotenv = require('dotenv')
 
