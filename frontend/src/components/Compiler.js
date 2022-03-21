@@ -17,8 +17,13 @@ int main() {
      return 0;
 }`);
 
+  const [input, setInput] = useState("");
+  const [inputtype, setInputtype] = useState("yes");
+
   const submitCode = async () => {
     console.log(code);
+    console.log(input);
+    console.log(inputtype);
     const res = await fetch("/submitcode", {
       method: "POST",
       headers: {
@@ -26,6 +31,8 @@ int main() {
       },
       body: JSON.stringify({
         code,
+        input,
+        inputtype,
       }),
     });
 
@@ -70,7 +77,6 @@ int main() {
         Compiler
         <button onClick={submitCode}>submit</button>
         <br />
-        <br />
         <div>
           <AceEditor
             style={{
@@ -88,6 +94,40 @@ int main() {
             showGutter={true}
             highlightActiveLine={true}
             value={code}
+            setOptions={{
+              enableBasicAutocompletion: false,
+              enableLiveAutocompletion: true,
+              enableSnippets: true,
+              showLineNumbers: true,
+              tabSize: 4,
+            }}
+          />
+          Compile With Input :
+          <select name="" id="">
+            <option value="yes" onChange={(e) => setInputtype(e.target.value)}>
+              yes
+            </option>
+            <option value="no" onChange={(e) => setInputtype(e.target.value)}>
+              no
+            </option>
+          </select>
+          <br />
+          <AceEditor
+            style={{
+              height: "8vh",
+              width: "70%",
+              borderRadius: "10px",
+            }}
+            placeholder="INPUT ..."
+            mode="javascript"
+            theme="monokai"
+            name="basic-code-editor"
+            onChange={(e) => setInput(e)}
+            fontSize={14}
+            showPrintMargin={false}
+            showGutter={false}
+            highlightActiveLine={true}
+            value={input}
             setOptions={{
               enableBasicAutocompletion: false,
               enableLiveAutocompletion: true,

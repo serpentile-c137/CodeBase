@@ -36,6 +36,14 @@ const userSchema = new mongoose.Schema({
         {
             code: {
                 type: String,
+                required: true
+            },
+            inputtype: {
+                type: String,
+                required: true
+            },
+            input: {
+                type: String,
                 // required: true
             },
             submittime: {
@@ -87,11 +95,11 @@ userSchema.methods.generateAuthToken = async function () {
     }
 }
 
-userSchema.methods.addMessage = async function (code) {
+userSchema.methods.addMessage = async function (code, input, inputtype) {
     try {
         let submittime = new Date()
         console.log(code)
-        this.codes = this.codes.concat({ code: code, submittime: submittime })
+        this.codes = this.codes.concat({ code: code, inputtype: inputtype, input: input, submittime: submittime })
         await this.save()
         return this.codes
     } catch (err) {

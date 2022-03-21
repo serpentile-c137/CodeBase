@@ -8,6 +8,10 @@ require('../db/conn')
 const User = require('../model/UserScehma')
 const authenticate = require('../middleware/authenticate')
 
+var compiler = require('compilex');
+var option = { stats: true };
+compiler.init(option);
+
 router.get('/', (req, res) => {
     res.send('hello from express server :) using router')
 })
@@ -106,15 +110,44 @@ router.post('/submitcode', authenticate, async (req, res) => {
     console.log("submit code")
     try {
         const code = req.body.code
+        const input = req.body.input
+        const inputtype = req.body.inputtype
         console.log(req.body.code)
         if (!code) {
             console.log("code cant be empty")
             return res.json({ error: "code cant be empty" })
         }
 
+        if (inputtype === "yes") {
+            var envData = { OS: "windows", cmd: "g++" };
+            compiler.compileCPPWithInput(envData, code, input, function (data) {
+                if (data.error) {
+                    res.send(data.error);
+                }
+                else {
+                    console.log(data)
+                    res.send(data.output);
+                }
+            });
+        }
+        else {
+
+            var envData = { OS: "windows", cmd: "g++" };
+            compiler.compileCPP(envData, code, function (data) {
+                if (data.error) {
+                    res.send(data.error);
+                }
+                else {
+                    console.log(data)
+                    res.send(data.output);
+                }
+
+            });
+        }
+
         const usercode = await User.findOne({ _id: req.userID })
         if (usercode) {
-            const usercode1 = await usercode.addMessage(code)
+            const usercode1 = await usercode.addMessage(code, input, inputtype)
             // await usercode1.save()
             console.log(usercode1)
             res.send(usercode1)
