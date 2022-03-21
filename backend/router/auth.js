@@ -102,4 +102,28 @@ router.get('/logout', (req, res) => {
     res.status(200).send("logout")
 })
 
+router.post('/submitcode', authenticate, async (req, res) => {
+    console.log("submit code")
+    try {
+        const code = req.body.code
+        console.log(req.body.code)
+        if (!code) {
+            console.log("code cant be empty")
+            return res.json({ error: "code cant be empty" })
+        }
+
+        const usercode = await User.findOne({ _id: req.userID })
+        if (usercode) {
+            const usercode1 = await usercode.addMessage(code)
+            // await usercode1.save()
+            console.log(usercode1)
+            res.send(usercode1)
+            res.status(201).json({ message: "code submitted" })
+        }
+
+    } catch (err) {
+        console.log(err)
+    }
+})
+
 module.exports = router
