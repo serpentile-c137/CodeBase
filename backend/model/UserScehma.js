@@ -36,11 +36,11 @@ const userSchema = new mongoose.Schema({
         {
             code: {
                 type: String,
-                required: true
+                // required: true
             },
             inputtype: {
                 type: String,
-                required: true
+                // required: true
             },
             input: {
                 type: String,
