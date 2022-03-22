@@ -17,7 +17,7 @@ const About = () => {
       });
 
       const data = await res.json();
-      // setUserdata(data);
+      setUserdata(data);
       console.log(userdata);
 
       if (!res.status === 200) {

@@ -8,9 +8,7 @@ require('../db/conn')
 const User = require('../model/UserScehma')
 const authenticate = require('../middleware/authenticate')
 
-var compiler = require('compilex');
-var option = { stats: true };
-compiler.init(option);
+var axios = require('axios');
 
 router.get('/', (req, res) => {
     res.send('hello from express server :) using router')
@@ -118,38 +116,43 @@ router.post('/submitcode', authenticate, async (req, res) => {
             return res.json({ error: "code cant be empty" })
         }
 
-        if (inputtype === "yes") {
-            var envData = { OS: "windows", cmd: "g++" };
-            compiler.compileCPPWithInput(envData, code, input, function (data) {
-                if (data.error) {
-                    res.send(data.error);
-                }
-                else {
-                    console.log(data)
-                    res.send(data.output);
-                }
-            });
-        }
-        else {
+        var data = JSON.stringify({
+            "code": code,
+            "language": "c",
+            "input": input
+        });
 
-            var envData = { OS: "windows", cmd: "g++" };
-            compiler.compileCPP(envData, code, function (data) {
-                if (data.error) {
-                    res.send(data.error);
-                }
-                else {
-                    console.log(data)
-                    res.send(data.output);
-                }
+        var config = {
+            method: 'post',
+            url: 'https://codexweb.netlify.app/.netlify/functions/enforceCode',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: data
+        };
 
+        let output
+        axios(config)
+            .then(function (response) {
+                console.log(response.data);
+                output = response.data.output
+                // const output = response.data.output
+                console.log(output)
+                // return response.data.output
+            })
+            .catch(function (error) {
+                console.log(error);
             });
-        }
+
+        console.log(output)
+
+        // const output = response.data.output
 
         const usercode = await User.findOne({ _id: req.userID })
         if (usercode) {
             const usercode1 = await usercode.addMessage(code, input, inputtype)
             // await usercode1.save()
-            console.log(usercode1)
+            // console.log(usercode1)
             res.send(usercode1)
             res.status(201).json({ message: "code submitted" })
         }
