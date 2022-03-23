@@ -131,29 +131,28 @@ router.post('/submitcode', authenticate, async (req, res) => {
             data: data
         };
 
-        let output
-        axios(config)
+        const output = await axios(config)
             .then(function (response) {
-                console.log(response.data);
-                output = response.data.output
+                // console.log(response.data);
+                // output = response.data.output
                 // const output = response.data.output
-                console.log(output)
-                // return response.data.output
+                // console.log(response.json())
+                return response.data
             })
             .catch(function (error) {
                 console.log(error);
             });
 
-        console.log(output)
+        console.log("output: ", output)
 
         // const output = response.data.output
 
         const usercode = await User.findOne({ _id: req.userID })
         if (usercode) {
-            const usercode1 = await usercode.addMessage(code, input, inputtype)
+            const usercode1 = await usercode.addMessage(code, input, inputtype, output.output, output.error)
             // await usercode1.save()
             // console.log(usercode1)
-            res.send(usercode1)
+            res.send(output)
             res.status(201).json({ message: "code submitted" })
         }
 
