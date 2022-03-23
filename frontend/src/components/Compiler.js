@@ -19,6 +19,7 @@ int main() {
 
   const [input, setInput] = useState("");
   const [inputtype, setInputtype] = useState("yes");
+  const [output, setOutput] = useState("");
 
   const submitCode = async () => {
     console.log(code);
@@ -35,12 +36,14 @@ int main() {
         inputtype,
       }),
     });
-
     const data1 = await res.json();
     if (!data1) {
       console.log("code not sent");
     } else {
-      alert("sent");
+      // console.log(data1);
+      setOutput(data1);
+      console.log("sent successfully");
+      // alert("sent");
     }
   };
 
@@ -74,68 +77,98 @@ int main() {
   return (
     <>
       <div className="container">
-        Compiler
-        <button onClick={submitCode}>submit</button>
-        <br />
-        <div>
-          <AceEditor
-            style={{
-              height: "70vh",
-              width: "70%",
-              borderRadius: "10px",
-            }}
-            placeholder="Start Coding"
-            mode="javascript"
-            theme="monokai"
-            name="basic-code-editor"
-            onChange={(e) => setCode(e)}
-            fontSize={14}
-            showPrintMargin={true}
-            showGutter={true}
-            highlightActiveLine={true}
-            value={code}
-            setOptions={{
-              enableBasicAutocompletion: false,
-              enableLiveAutocompletion: true,
-              enableSnippets: true,
-              showLineNumbers: true,
-              tabSize: 4,
-            }}
-          />
-          Compile With Input :
-          <select name="" id="">
-            <option value="yes" onChange={(e) => setInputtype(e.target.value)}>
-              yes
-            </option>
-            <option value="no" onChange={(e) => setInputtype(e.target.value)}>
-              no
-            </option>
-          </select>
-          <br />
-          <AceEditor
-            style={{
-              height: "8vh",
-              width: "70%",
-              borderRadius: "10px",
-            }}
-            placeholder="INPUT ..."
-            mode="javascript"
-            theme="monokai"
-            name="basic-code-editor"
-            onChange={(e) => setInput(e)}
-            fontSize={14}
-            showPrintMargin={false}
-            showGutter={false}
-            highlightActiveLine={true}
-            value={input}
-            setOptions={{
-              enableBasicAutocompletion: false,
-              enableLiveAutocompletion: true,
-              enableSnippets: true,
-              showLineNumbers: true,
-              tabSize: 4,
-            }}
-          />
+        <div className="row">
+          <div className="col mx-3 my-3">
+            {/* Compiler */}
+            <button
+              onClick={submitCode}
+              style={{ float: "right" }}
+              className="btn btn-success"
+            >
+              RUN
+            </button>
+            <div>
+              Compile With Input :
+              <select
+                name=""
+                id=""
+                className="form-select"
+                style={{ width: "90px" }}
+              >
+                <option
+                  value="no"
+                  onChange={(e) => setInputtype(e.target.value)}
+                >
+                  no
+                </option>
+                <option
+                  value="yes"
+                  onChange={(e) => setInputtype(e.target.value)}
+                >
+                  yes
+                </option>
+              </select>
+            </div>
+            <div className="my-3">
+              <AceEditor
+                style={{
+                  height: "70vh",
+                  width: "100%",
+                  borderRadius: "10px",
+                }}
+                placeholder="Start Coding"
+                mode="javascript"
+                theme="monokai"
+                name="basic-code-editor"
+                onChange={(e) => setCode(e)}
+                fontSize={14}
+                showPrintMargin={true}
+                showGutter={true}
+                highlightActiveLine={true}
+                value={code}
+                setOptions={{
+                  enableBasicAutocompletion: false,
+                  enableLiveAutocompletion: true,
+                  enableSnippets: true,
+                  showLineNumbers: true,
+                  tabSize: 4,
+                }}
+              />
+            </div>
+            <div className="my-3">
+              <AceEditor
+                style={{
+                  height: "8vh",
+                  width: "100%",
+                  borderRadius: "10px",
+                }}
+                placeholder="INPUT ..."
+                mode="javascript"
+                theme="monokai"
+                name="basic-code-editor"
+                onChange={(e) => setInput(e)}
+                fontSize={14}
+                showPrintMargin={false}
+                showGutter={false}
+                highlightActiveLine={true}
+                value={input}
+                setOptions={{
+                  enableBasicAutocompletion: false,
+                  enableLiveAutocompletion: true,
+                  enableSnippets: true,
+                  showLineNumbers: true,
+                  tabSize: 4,
+                }}
+              />
+            </div>
+          </div>
+          <div className="col col-lg-2 mx-3 my-3">
+            <p class="card-text">
+              output panel: <br />
+              <br />
+              <br /> {output.output}
+            </p>
+          </div>
         </div>
       </div>
     </>
