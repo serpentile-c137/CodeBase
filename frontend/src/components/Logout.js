@@ -17,7 +17,7 @@ const Logout = () => {
 
         }).then((res) => {
             navigate("/login");
-            dispatch({ type: "USER", payload: false })
+            dispatch({ type: "USER", loggedin: false })
             if (res.status !== 200) {
                 const error = new Error(res.error)
                 throw error

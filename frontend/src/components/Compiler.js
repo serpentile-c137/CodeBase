@@ -112,7 +112,7 @@ int main() {
             <div className="my-3">
               <AceEditor
                 style={{
-                  height: "70vh",
+                  height: "60vh",
                   width: "100%",
                   borderRadius: "10px",
                 }}

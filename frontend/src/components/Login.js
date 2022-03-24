@@ -28,7 +28,7 @@ const Login = () => {
     if (res.status === 400 || !data) {
       window.alert("invalid login credentials");
     } else {
-      dispatch({ type: "USER", payload: true })
+      dispatch({ type: "USER", loggedin: true })
       window.alert("login successful");
       navigate("/");
     }

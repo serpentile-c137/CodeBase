@@ -1,10 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.css";
 import { Link } from "react-router-dom";
 import { UserContext } from '../App'
 
 const Navbar = () => {
   const { state, dispatch } = useContext(UserContext)
+  // const [userstate, setUserstate] = useState(state)
+
+  useEffect(() => {
+    console.log(state)
+  }, []);
+
+
 
   const RenderNav = () => {
     if (state) {

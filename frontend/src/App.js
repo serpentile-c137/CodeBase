@@ -38,8 +38,6 @@ const App = () => {
         <Navbar />
         <Routing />
       </UserContext.Provider>
-
-
     </>
   )
 }

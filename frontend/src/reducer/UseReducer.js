@@ -1,9 +1,15 @@
 export const initialState = null;
 
 export const reducer = (state, action) => {
+  console.log(action.loggedin)
   if (action.type === "USER") {
-    return action.payload;
+    return action.loggedin;
   }
+  // else {
+  //   return action.payload;
+  // }
 
-  return state;
+  return {
+    ...state
+  }
 };
