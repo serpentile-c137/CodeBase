@@ -23,6 +23,7 @@ const Routing = () => {
       <Route exact path='/compiler' element={<Compiler />} />
       <Route exact path='/about' element={<About />} />
       <Route exact path='/logout' element={<Logout />} />
+      {/* <Route exact path='/payment_:id' element={<Tutorial />} /> */}
     </Routes>)
 }
 
