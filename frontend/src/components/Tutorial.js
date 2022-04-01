@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Tutsidenav from "./Tutsidenav";
 
 const Tutorial = () => {
   let navigate = useNavigate();
-  const [data, setData] = useState("");
+  const [data, setData] = useState([]);
   // let { id } = useParams();
-  //   console.log(id);
+  // console.log(id);
 
-  const callAboutPage = async () => {
+  const callTutorialPage = async () => {
     try {
       const res = await fetch("/tutorial", {
         method: "GET",
@@ -18,11 +19,12 @@ const Tutorial = () => {
         },
         credentials: "include",
       });
+      console.log(res);
 
       const tutdata = await res.json();
-      console.log(tutdata);
       setData(tutdata);
-      console.log(data);
+      // console.log(tutdata);
+      // console.log(data);
 
       if (!res.status === 200) {
         const error = new Error(res.error);
@@ -66,12 +68,13 @@ const Tutorial = () => {
   // }
 
   useEffect(() => {
-    callAboutPage();
+    callTutorialPage();
   }, []);
 
   return (
     <>
       <div>Tutorial</div>
+      <Tutsidenav />
       {/* <Sidebar posts={data} /> */}
     </>
   );
