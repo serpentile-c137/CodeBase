@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Tutorial = () => {
   let navigate = useNavigate();
-  const [data, setData] = useState();
-  let { id } = useParams();
+  const [data, setData] = useState("");
+  // let { id } = useParams();
   //   console.log(id);
 
   const callAboutPage = async () => {
@@ -22,6 +22,7 @@ const Tutorial = () => {
       const tutdata = await res.json();
       console.log(tutdata);
       setData(tutdata);
+      console.log(data);
 
       if (!res.status === 200) {
         const error = new Error(res.error);
@@ -33,6 +34,37 @@ const Tutorial = () => {
     }
   };
 
+  // function Sidebar(props) {
+  //   const sidebar = (
+  //     <ul>
+  //       {props.posts.map((data) => (
+  //         <>
+  //           {data.title}
+  //           <br />
+  //           {/* <Link className="nav-link" aria-current="page" to="/">
+  //             {data.title}
+  //           </Link> */}
+  //         </>
+  //       ))}
+  //     </ul>
+  //   );
+  //   const content = props.posts.map((data) => (
+  //     <div key={data.id}>
+  //       <h3>{data.title}</h3>
+  //       <p>{data.concept}</p>
+  //       <p>{data.codesnippet}</p>
+  //       <p>{data.practicequestion}</p>
+  //     </div>
+  //   ));
+  //   return (
+  //     <div>
+  //       {sidebar}
+  //       {/* <hr />
+  //       {content} */}
+  //     </div>
+  //   );
+  // }
+
   useEffect(() => {
     callAboutPage();
   }, []);
@@ -40,31 +72,7 @@ const Tutorial = () => {
   return (
     <>
       <div>Tutorial</div>
-
-      {/* <div className="container">
-        {data.map((user) => {
-          if (user.id === id) {
-            return (
-              <>
-                <br />
-                {user._id}
-                <strong>Title : </strong>
-                {user.title}
-                <br />
-                <strong>concept : </strong>
-                {user.concept}
-                <br />
-                <strong>codesnippet : </strong>
-                {user.codesnippet}
-                <br />
-                <strong>practicequestion : </strong>
-                {user.practicequestion}
-                <br />
-              </>
-            );
-          }
-        })}
-      </div> */}
+      {/* <Sidebar posts={data} /> */}
     </>
   );
 };
