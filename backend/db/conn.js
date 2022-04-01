@@ -1,7 +1,7 @@
 const mongoose = require("mongoose")
 
-const DB = process.env.DATABASE
+const USERDB = process.env.USERDATABASE
 
-mongoose.connect(DB).then(() => {
+mongoose.connect(USERDB).then(() => {
     console.log("connection successful")
 }).catch((err) => console.log('no connection', err))

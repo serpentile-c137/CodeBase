@@ -6,12 +6,36 @@ const jwt = require("jsonwebtoken")
 
 require('../db/conn')
 const User = require('../model/UserScehma')
+const Tutorial = require('../model/TutorialSchema')
 const authenticate = require('../middleware/authenticate')
 
 var axios = require('axios');
+const showtutorial = require('../middleware/authenticate')
 
 router.get('/', (req, res) => {
     res.send('hello from express server :) using router')
+})
+
+router.post('/pushtutorial', async (req, res) => {
+    const { title, concept, codesnippet, practicequestion } = req.body
+    if (!title || !concept || !codesnippet || !practicequestion) {
+        return res.json({ error: "please fill all the fields" })
+    }
+    // console.log(req.body)
+    try {
+        const tutorialExist = await Tutorial.findOne({ title: title })
+
+        if (tutorialExist) {
+            return res.status(422).json({ error: "tutorial already exists" })
+        } else {
+            const tutorial = new Tutorial({ title, concept, codesnippet, practicequestion })
+            await tutorial.save()
+            res.status(201).json({ message: "tutorial saved successfully" })
+        }
+
+    } catch (err) {
+        console.log(err)
+    }
 })
 
 router.post('/register', async (req, res) => {
@@ -86,10 +110,10 @@ router.get('/about', authenticate, (req, res) => {
     res.send(req.rootUser)
 })
 
-router.get('/tutorial', authenticate, (req, res) => {
+router.get('/tutorial', showtutorial, (req, res) => {
     console.log("tutorial page")
     // res.send("tutorial page")
-    res.send(req.rootUser)
+    res.send(req.tutorial)
 })
 
 router.get('/compiler', authenticate, (req, res) => {

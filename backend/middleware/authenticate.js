@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken")
+const Tutorial = require("../model/TutorialSchema")
 const User = require('../model/UserScehma')
 
 // const authenticate = async (req, res, next) => {
@@ -58,7 +59,36 @@ const authenticate = async (req, res, next) => {
         res.status(401).send('Unauthorised: no token provided')
         console.log(err)
     }
+}
+
+const showtutorial = async (req, res, next) => {
+    try {
+        token = req.cookies.jwtoken
+        // console.log("this is token: ", token)
+        const verifytoken = jwt.verify(token, process.env.SECRET_KEY)
+        const rootUser = await User.findOne({ _id: verifytoken._id, "tokens.token": token })
+
+        if (!rootUser) {
+            throw new Error("User not found")
+        }
+        req.token = token
+        req.rootUser = rootUser
+        req.userID = rootUser._id
+
+        const tutorialList = await Tutorial.find()
+        console.log(tutorialList)
+        if (!tutorialList) {
+            throw new Error("tutorial not found")
+        }
+        req.tutorial = tutorialList
+        next()
+
+    } catch (err) {
+        res.status(401).send('Unauthorised: no token provided')
+        console.log(err)
+    }
 
 }
 
 module.exports = authenticate
+module.exports = showtutorial
