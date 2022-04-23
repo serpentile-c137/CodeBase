@@ -8,12 +8,14 @@ const Tutsidenav = () => {
   const [items, setItems] = useState([]);
   const [id, setId] = useState("");
 
+  const [tutorial, setTutorial] = useState({ tutorials: [] });
+
   function Sidebar(props) {
     const sidebar = (
       <ul>
         {props.posts.map((data) => (
           <>
-            {data.title}
+            {/* {data.title} */}
             <br />
             <Link
               className="nav-link"
@@ -52,7 +54,7 @@ const Tutsidenav = () => {
       <div>
         {sidebar}
 
-        {content}
+        {/* {content} */}
       </div>
     );
   }
@@ -84,10 +86,36 @@ const Tutsidenav = () => {
     console.log(items);
   }, []);
 
+  // useEffect(() => {
+  //   const fetchPostList = async () => {
+  //     const data = await fetch("/tutorial", {
+  //       method: "GET",
+  //       headers: {
+  //         Accept: "application/json",
+  //         "content-type": "application/json",
+  //       },
+  //       credentials: "include",
+  //     });
+  //     setTutorial({ tutorials: data });
+  //     console.log(data);
+  //   };
+  //   fetchPostList();
+  // }, [setTutorial]);
+
   return (
     <>
       <div>Tutsidenav 1234</div>
       <Sidebar posts={items} />
+      {/* <div className="container">
+        {items.map((item) => (
+          <tr key={item.id}>
+            <td>{item.id}</td>
+            <td>{item.concept}</td>
+            <td>{item.codesnippet}</td>
+            <td>{item.practicequestion}</td>
+          </tr>
+        ))}
+      </div> */}
     </>
   );
 };
