@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { Nav, Col, Tab, Row } from "react-bootstrap";
 
 const Tutsidenav = () => {
   const [error, setError] = useState(null);
@@ -104,8 +105,35 @@ const Tutsidenav = () => {
 
   return (
     <>
-      <div>Tutsidenav 1234</div>
-      <Sidebar posts={items} />
+      {/* <div>Tutsidenav 1234</div> */}
+      {/* <Sidebar posts={items} /> */}
+
+      <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+        <Row>
+          <Col sm={3}>
+            <Nav variant="pills" className="flex-column">
+              {items.map((items, index) => (
+                <Nav.Item>
+                  <Nav.Link eventKey={items.title}>{items.title}</Nav.Link>
+                </Nav.Item>
+              ))}
+            </Nav>
+          </Col>
+          <Col sm={9}>
+            <Tab.Content>
+              {items.map((items, index) => (
+                <Tab.Pane eventKey={items.title}>
+                  <h3>{items.title}</h3>
+                  <p>{items.concept}</p>
+                  <p>{items.codesnippet}</p>
+                  <p>{items.practicequestion}</p>
+                </Tab.Pane>
+              ))}
+            </Tab.Content>
+          </Col>
+        </Row>
+      </Tab.Container>
+
       {/* <div className="container">
         {items.map((item) => (
           <tr key={item.id}>

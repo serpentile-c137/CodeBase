@@ -73,7 +73,7 @@ const Tutorial = () => {
 
   return (
     <>
-      <div>Tutorial</div>
+      {/* <div>Tutorial</div> */}
       <Tutsidenav />
       {/* <Sidebar posts={data} /> */}
     </>
