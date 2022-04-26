@@ -2,6 +2,11 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { Nav, Col, Tab, Row } from "react-bootstrap";
+import AceEditor from "react-ace";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/ext-language_tools";
+import "ace-builds/src-noconflict/ext-beautify";
 
 const Tutsidenav = () => {
   const [error, setError] = useState(null);
@@ -10,6 +15,10 @@ const Tutsidenav = () => {
   const [id, setId] = useState("");
 
   const [tutorial, setTutorial] = useState({ tutorials: [] });
+
+  const divStyle = {
+    color: "blue !important",
+  };
 
   function Sidebar(props) {
     const sidebar = (
@@ -108,9 +117,12 @@ const Tutsidenav = () => {
       {/* <div>Tutsidenav 1234</div> */}
       {/* <Sidebar posts={items} /> */}
 
-      <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+      <Tab.Container
+        id="left-tabs-example"
+        defaultActiveKey="Beginner's program 1"
+      >
         <Row>
-          <Col sm={3}>
+          <Col sm={2}>
             <Nav variant="pills" className="flex-column">
               {items.map((items, index) => (
                 <Nav.Item>
@@ -123,10 +135,37 @@ const Tutsidenav = () => {
             <Tab.Content>
               {items.map((items, index) => (
                 <Tab.Pane eventKey={items.title}>
-                  <h3>{items.title}</h3>
-                  <p>{items.concept}</p>
-                  <p>{items.codesnippet}</p>
-                  <p>{items.practicequestion}</p>
+                  <h3> {items.title}</h3>
+                  <br />
+                  <p>Concept: {items.concept}</p>
+                  <br />
+                  {/* <div> Code Snippet: {items.codesnippet}</div> */}
+                  <AceEditor
+                    style={{
+                      height: "60vh",
+                      width: "1000px",
+                      borderRadius: "10px",
+                    }}
+                    placeholder="Start Coding"
+                    mode="javascript"
+                    theme="monokai"
+                    name="basic-code-editor"
+                    // onChange={(e) => setCode(e)}
+                    fontSize={14}
+                    showPrintMargin={true}
+                    showGutter={true}
+                    highlightActiveLine={true}
+                    value={items.codesnippet}
+                    setOptions={{
+                      enableBasicAutocompletion: false,
+                      enableLiveAutocompletion: true,
+                      enableSnippets: true,
+                      showLineNumbers: true,
+                      tabSize: 4,
+                    }}
+                  />
+                  <br />
+                  <p> Miscellaneous: {items.practicequestion}</p>
                 </Tab.Pane>
               ))}
             </Tab.Content>

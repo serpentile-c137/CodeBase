@@ -36,7 +36,6 @@ const About = () => {
 
   return (
     <>
-      <div></div>
       <div className="container">
         <div class="card text-center mx-5 my-5">
           <div class="card-header">
