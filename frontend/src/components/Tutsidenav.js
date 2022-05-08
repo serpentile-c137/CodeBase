@@ -117,10 +117,7 @@ const Tutsidenav = () => {
       {/* <div>Tutsidenav 1234</div> */}
       {/* <Sidebar posts={items} /> */}
 
-      <Tab.Container
-        id="left-tabs-example"
-        defaultActiveKey="Beginner's program 1"
-      >
+      <Tab.Container id="left-tabs-example" defaultActiveKey="C Loops">
         <Row>
           <Col sm={2}>
             <Nav variant="pills" className="flex-column">
@@ -142,7 +139,7 @@ const Tutsidenav = () => {
                   {/* <div> Code Snippet: {items.codesnippet}</div> */}
                   <AceEditor
                     style={{
-                      height: "60vh",
+                      height: "40vh",
                       width: "1000px",
                       borderRadius: "10px",
                     }}

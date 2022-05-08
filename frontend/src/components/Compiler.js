@@ -112,7 +112,7 @@ int main() {
             <div className="my-3">
               <AceEditor
                 style={{
-                  height: "60vh",
+                  height: "55vh",
                   width: "100%",
                   borderRadius: "10px",
                 }}
@@ -135,6 +135,7 @@ int main() {
                 }}
               />
             </div>
+            <p>Input:</p>
             <div className="my-3">
               <AceEditor
                 style={{
@@ -162,11 +163,35 @@ int main() {
               />
             </div>
           </div>
-          <div className="col col-lg-2 mx-3 my-3">
+          <div className="col col-lg-3 mx-3 my-3">
             <p class="card-text">
               output panel: <br />
+              <AceEditor
+                style={{
+                  height: "60vh",
+                  width: "300px",
+                  borderRadius: "10px",
+                }}
+                // placeholder="Start Coding"
+                mode="javascript"
+                theme="monokai"
+                name="basic-code-editor"
+                // onChange={(e) => setCode(e)}
+                fontSize={14}
+                showPrintMargin={true}
+                // showGutter={true}
+                highlightActiveLine={true}
+                value={output.output}
+                setOptions={{
+                  enableBasicAutocompletion: false,
+                  enableLiveAutocompletion: true,
+                  enableSnippets: true,
+                  showLineNumbers: true,
+                  tabSize: 4,
+                }}
+              />
               <br />
-              <br /> {output.output}
+              {/* <br /> {output.output} */}
             </p>
           </div>
         </div>
